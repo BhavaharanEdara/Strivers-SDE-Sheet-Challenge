@@ -1,0 +1,33 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+    public static void sort012(int[] arr)
+    {
+        //Write your code here
+        int i = 0;
+        int j = 0;
+        int k = arr.length-1;
+        while(j<=k){
+            if(arr[j]==0){
+                int a = arr[j];
+                arr[j] = arr[i];
+                arr[i] =a;
+                i++;
+                j++;
+            }
+            else if(arr[j] == 2){
+                int a = arr[j];
+                arr[j] = arr[k];
+                arr[k] = a;
+                k--;
+            }
+            else{
+                j++;
+            }
+        }
+
+
+
+    }
+}
