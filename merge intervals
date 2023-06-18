@@ -1,0 +1,48 @@
+import java.util.* ;
+import java.io.*; 
+/*******************************************************
+
+    Following is the Interval class structure
+
+    
+*******************************************************/
+
+import java.util.List;
+
+//import org.graalvm.compiler.lir.alloc.lsra.Interval;
+
+//import org.graalvm.compiler.lir.alloc.lsra.Interval;
+
+import java.util.ArrayList;
+
+public class Solution {
+    public static List<Interval> mergeIntervals(Interval[] intervals) {
+        // write your code here.
+        ArrayList<Interval> ans = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> a.start - b.start);
+        //for(int i=0;i<intervals.length;i++){
+          //      System.out.print(intervals[i].start);
+            //    System.out.println(intervals[i].finish);
+
+        //}
+
+        ans.add(intervals[0]);
+        for(int i=1;i<intervals.length;i++){
+            Interval p = ans.get(ans.size()-1);
+            int ps = p.start;
+            int pf = p.finish;
+
+            int is = intervals[i].start;
+            int iif = intervals[i].finish;
+
+
+            if(pf>=is){
+                ans.set(ans.size()-1, new Interval(Math.min(ps,is), Math.max(pf,iif)));
+            }
+            else{
+                ans.add(intervals[i]);
+            }
+        }
+        return ans;
+    }
+}
