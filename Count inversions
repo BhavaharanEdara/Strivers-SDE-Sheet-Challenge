@@ -1,0 +1,58 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    
+    static long merge(long[] arr, int n, int i, int k ,int j){
+        long[] a = new long[j-i+1];
+        int p = 0;
+        int s = i;
+        int count = 0;
+        int e = k+1;
+        while(s<=k && e<=j){
+            if(arr[e]<arr[s]){
+                a[p] = arr[e];
+                count += k-s+1;
+                p++;
+                e++;
+            }
+            else{
+                a[p] = arr[s];
+                p++;
+                s++;
+            }
+            
+        }
+        while(s<=k){
+            a[p] = arr[s];
+            p++;s++;
+        }
+        while(e<=j){
+            a[p] = arr[e];
+            p++;e++;
+        }
+        
+        p = 0;
+        for(int m=i;m<=j;m++){
+            arr[m] = a[p];
+            p++;
+        }
+        return count;
+    }
+    static long mergesort(long[] arr, int n, int i, int j){
+        if(j-i+1<=1){
+            return 0;
+        }
+        int k = (j+i)/2;
+
+        long a = mergesort(arr, n, i, k);
+        long b = mergesort(arr, n, k+1, j);
+
+        long c = merge(arr, n , i, k, j);
+
+        return a+b+c;
+    }
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        return mergesort(arr, n, 0, n-1);
+    }
+}
