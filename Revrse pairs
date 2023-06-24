@@ -1,0 +1,79 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution 
+{
+    static int merge(ArrayList<Integer> arr , int s, int mid, int e){
+        int i = s;
+        int j = mid+1;
+        int[] temp = new int[e-s+1];
+        int ind = 0;
+        int count = 0;
+        while(i<=mid && j<=e){
+            if(arr.get(i)<=arr.get(j)){
+                i++;
+            }
+            else if(arr.get(i)>arr.get(j)){
+                if(arr.get(i)> 2*arr.get(j)){
+                    count += mid-i+1;
+                    j++;
+                }
+                else{
+
+                    i++;
+                }
+            }
+        }
+        i = s;
+        j = mid+1;
+        ind = 0;
+        while(i<=mid && j<=e && ind<(e-s+1)){
+            if(arr.get(i)<=arr.get(j)){
+                temp[ind] = arr.get(i);
+                ind++;
+                i++;
+            }
+            else{
+                temp[ind] = arr.get(j);
+                ind++;
+                j++;
+            }
+        }
+        while(i<=mid){
+            temp[ind] = arr.get(i);
+            i++;
+            ind++;
+        }
+        
+        while(j<=e){
+            temp[ind] = arr.get(j);
+            j++;
+            ind++;
+        }
+        ind = 0;
+        for(int m=s;m<=e;m++){
+            arr.set(m, temp[ind]);
+            ind++;
+        }
+        return count;
+    }
+
+    static int mergesort(ArrayList<Integer> arr, int s, int e){
+        if(e-s+1<=1){
+            return 0;
+        }
+        int mid = (e+s)/2;
+        int a = mergesort(arr, s, mid);
+        int b = mergesort(arr, mid+1, e);
+        int c = merge(arr, s, mid, e);
+
+        return a+b+c;
+    }
+    public static int reversePairs(ArrayList<Integer> arr) 
+    {
+        // Write your code here.
+        return mergesort(arr, 0, arr.size()-1);
+    }
+
+}
