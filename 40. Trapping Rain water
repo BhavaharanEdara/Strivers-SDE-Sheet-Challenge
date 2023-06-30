@@ -1,0 +1,34 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long getTrappedWater(long[] arr, int n) {
+        // Write your code here.
+        long smax = arr[0];
+        long emax = arr[n-1];
+        int i = 1;
+        int j = n-2;
+        long ans=0;
+        while(i<=j){
+            if(smax<emax){
+                if(arr[i]>=smax){
+                    smax = arr[i];
+                }
+                else{
+                    ans += smax-arr[i];
+                }
+                i++;
+            }
+            else{
+                if(arr[j]>=emax){
+                    emax = arr[j];
+                }
+                else{
+                    ans += emax-arr[j];
+                }
+                j--;
+            }
+        }
+        return ans;
+
+    }
+}
