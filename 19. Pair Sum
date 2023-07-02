@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.* ;
+
+public class Solution{
+    public static List<int[]> pairSum(int[] arr, int s) {
+        Arrays.sort(arr);
+        // Write your code here.
+        HashMap<Integer,Integer> map = new HashMap<>();
+        ArrayList<int[]> ans = new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            int a = s-arr[i];
+            if(map.containsKey(a)){
+                int count = map.get(a);
+                for(int j=0;j<count;j++){
+                    int[] inn = {a,arr[i]};
+                    //Arrays.sort(inn);
+                    ans.add(inn);
+                }
+            }
+
+            if(map.containsKey(arr[i])){
+                map.put(arr[i],map.get(arr[i])+1);
+            }
+            else{
+                map.put(arr[i], 1);
+            }
+        }
+        Collections.sort(ans, new Comparator<int[]>() {    
+            public int compare(int[]o1, int[] o2) {
+              return o1[0]-o2[0];
+            }               
+        });
+        return ans;
+    }
+}
