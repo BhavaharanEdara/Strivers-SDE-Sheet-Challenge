@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+		HashMap<Character,Integer> map = new HashMap<>();
+		int i = 0;
+		int j = 0;
+		int max = 1;
+		while(j<input.length()){
+			if(map.containsKey(input.charAt(j))){
+				int a = map.get(input.charAt(i));
+				a--;
+				if(a==0){
+					map.remove(input.charAt(i));
+				}
+				else{
+					map.put(input.charAt(i),a);
+				}
+				i++;
+			}
+			else{
+				map.put(input.charAt(j), 1);
+				max = Math.max(j-i+1,max);
+				j++;
+			}
+		}
+		return max;
+	}
+}
