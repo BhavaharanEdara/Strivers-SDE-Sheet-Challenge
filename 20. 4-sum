@@ -1,0 +1,31 @@
+import java.io.*;
+import java.util.* ;
+
+public class Solution {
+  public static String fourSum(int[] arr, int target, int n) {
+      // Write your code here.
+      Arrays.sort(arr);
+      for(int i=0;i<n;i++){
+        for(int j = i+1;j<n;j++){
+          int l =arr[i] + arr[j];
+          int a = j+1;
+          int b = n-1;
+          int sum = 0;
+          while(a<b && a<n){
+            sum = l+arr[a]+arr[b];
+
+            if(sum==target){
+              return "Yes";
+            }
+            else if(sum>target){
+              b--;
+            }
+            else{
+              a++;
+            }
+          }
+        }
+      }
+      return "No";
+  }
+}
