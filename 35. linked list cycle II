@@ -1,0 +1,48 @@
+/****************************************************************
+
+ Following is the class structure of the Node class:
+
+ class Node {
+     public int data;
+     public Node next;
+
+     Node()
+     {
+         this.data = 0;
+         this.next = null;
+     }
+     Node(int data)
+     {
+         this.data = data;
+         this.next = null;
+     }
+     Node(int data, Node next)
+     {
+         this.data = data;
+         this.next = next;
+     }
+ }
+
+ *****************************************************************/
+
+public class Solution {
+    public static Node firstNode(Node head) {
+        // Write your code here.
+        Node f = head;
+        Node s = head;
+        int i = 0;
+        while(i==0 || f!=s){
+            if(s==null || s.next==null){return null;}
+            f = f.next;
+            s = s.next.next;
+            i++;
+        }
+        f = head;
+        while(f!=s){
+            f = f.next;
+            s = s.next;
+        }
+        return f;
+
+    }
+}
