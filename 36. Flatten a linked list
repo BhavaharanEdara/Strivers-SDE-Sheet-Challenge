@@ -1,0 +1,82 @@
+/****************************************************************
+
+ Following is the class structure of the Node class:
+
+ class Node {
+     public int data;
+     public Node next;
+     public Node child;
+
+     Node()
+     {
+         this.data = 0;
+         this.next = null;
+         this.child = null;
+     }
+     Node(int data)
+     {
+         this.data = data;
+         this.next = null;
+         this.child = null;
+     }
+     Node(int data, Node next, Node child)
+     {
+         this.data = data;
+         this.next = next;
+         this.child = child;
+     }
+ }
+
+ *****************************************************************/
+
+public class Solution {
+    public static Node flattenLinkedList(Node head) {
+        //Write your code here
+        if(head.next == null){
+            return head;
+        }
+        Node f = head;
+        Node s = flattenLinkedList(head.next);
+        f.next = null;
+        Node temp = null;
+        Node d = null;
+        while(f!=null && s!=null){
+            if(temp==null){
+                if(f.data>s.data){
+                    temp = s;
+                    d = temp;
+                    s = s.child;
+                }
+                else{
+                    temp = f;
+                    d = temp;
+                    f = f.child;
+                }
+            }
+            else{
+                if(f.data>s.data){
+                    temp.child = s;
+                    s = s.child;
+                }
+                else{
+                    temp.child = f;
+                    f = f.child;
+                }
+                temp = temp.child;
+            }
+        }
+        
+        while(f!=null){
+            temp.child = f;
+            temp = temp.child;
+            f = f.child;
+        }
+        while(s!=null){
+            temp.child = s;
+            temp = temp.child;
+            s = s.child;
+        }
+        
+        return d;
+    }
+}
