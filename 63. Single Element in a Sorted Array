@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+public class Solution
+{
+    public static int singleNonDuplicate(ArrayList<Integer> arr)
+    {
+        //    Write your code here.
+        int l = 0;
+        int h = arr.size();
+        while(l<=h){
+            int mid = (l+h)/2;
+            int prev = -1;
+            int next = -1;
+            if(mid!=0){
+                prev = arr.get(mid-1);
+            }
+            if(mid!=arr.size()-1){
+                next = arr.get(mid+1);
+            }
+            if(arr.get(mid)==prev){
+                if(mid%2==1){
+                    l = mid+1;
+                }
+                else{
+                    h = mid-2;
+                }
+            }
+            else if(arr.get(mid)==next){
+                if(mid%2==0){
+                    l = mid+2;
+                }
+                else{
+                    h = mid-1;
+                }
+            }
+            else{
+                return arr.get(mid);
+            }
+
+        }
+        return -1;
+    }
+}
