@@ -1,0 +1,38 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+    static boolean possible(int mid, int[] arr, int n, int c){
+        int a = 1;
+        int cur = arr[0];
+        for(int i=1;i<n;i++){
+            if(arr[i]-cur>=mid){
+                a++;
+                cur = arr[i];
+            }
+        }
+        return c<=a;
+    }
+
+    public static int chessTournament(int[] positions, int n,  int c) 
+	{
+        // Write your code here. 
+        Arrays.sort(positions);
+        int l=0;
+        int h = positions[n-1]-positions[0];
+        int ans = 0;
+        while(l<=h){
+            int mid = (l+h)/2;
+            if(possible(mid, positions, n , c)){
+                ans = Math.max(mid,ans);
+                l = mid+1;
+            }
+            else{
+                h = mid-1;
+            }
+        }
+        return ans;
+
+    }
+
+}
