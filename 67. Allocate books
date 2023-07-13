@@ -1,5 +1,5 @@
 import java.util.* ;
-import java.io.*; 
+import java.io.*;
 public class Solution {
 
     static boolean check(long mid, int[] arr, int n){
