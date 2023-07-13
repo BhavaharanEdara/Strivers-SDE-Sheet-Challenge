@@ -1,0 +1,51 @@
+
+//C++ code
+struct meet
+{
+    
+    int start;
+    int end;
+    int ind;
+};
+
+bool compare(struct meet m1, struct meet m2)
+{
+     if (m1.end > m2.end) return false;
+     else if (m1.end < m2.end) return true;
+     else{
+         if(m1.ind <= m2.ind) return true;
+         else{return false;}
+     }
+
+}
+
+int maximumMeetings(vector<int> &start, vector<int> &end)
+{
+    int n = start.size();
+
+    struct meet meeting[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        meeting[i].ind = i + 1;
+        meeting[i].start = start[i];
+        meeting[i].end = end[i];
+    }
+
+    sort(meeting, meeting + n, compare);
+
+    int ans = 1;
+    int cur = meeting[0].end;
+
+    for (int i = 1; i < n; i++)
+    {
+
+        if (meeting[i].start > cur)
+        {
+            ans++;
+            cur = meeting[i].end;
+        }
+    }
+
+    return ans;
+}
