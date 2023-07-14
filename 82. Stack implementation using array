@@ -1,0 +1,55 @@
+//C++ code
+
+class Stack {
+    public:
+        int* st;
+        int Top;
+        int cap;
+public:
+    
+    Stack(int capacity) {
+        // Write your code here.
+        st = new int[capacity];
+        Top = -1;
+        this->cap = capacity;
+    }
+
+    void push(int num) {
+        // Write your code here.
+        if(Top==cap-1){
+            return;
+        }
+        Top++;
+        st[Top] = num;
+    }
+
+    int pop() {
+        // Write your code here.
+        if(Top == -1)
+            return -1;
+        int temp = st[Top];
+        Top--;
+        return temp;
+    }
+    
+    int top() {
+        // Write your code here.
+        if(Top==-1) return -1;
+        return st[Top];
+    }
+    
+    int isEmpty() {
+        // Write your code here.
+        if(Top==-1){
+            return 1;
+        }
+        return 0;
+    }
+    
+    int isFull() {
+        // Write your code here.
+        if(Top == cap-1) return 1;
+        else return 0;
+    }
+    
+};
