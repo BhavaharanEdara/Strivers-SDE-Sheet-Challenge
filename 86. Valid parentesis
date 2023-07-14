@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isValidParenthesis(string expression)
+{
+    // Write your code here.
+        stack<char> st;
+
+        for(int i=0;i<expression.length();i++){
+            if(expression.at(i)=='(' ||expression.at(i)=='{' || expression.at(i)=='['){
+                st.push(expression.at(i));
+            }
+            else{
+                if(st.size() == 0){return false;} 
+
+                if(expression.at(i)==')'){
+                    if(st.top()=='('){
+                        st.pop();
+                    }
+                    else{
+
+                        return false;}
+                }
+                else if(expression.at(i)==']'){
+                    if(st.top()=='['){
+                        st.pop();
+                    }
+                    else{
+                        return false;}
+                }
+                else{
+                    if(st.top()=='{'){
+                        st.pop();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+        }
+        if(st.size()!=0){
+            return false;
+        }
+        return true;
+}
