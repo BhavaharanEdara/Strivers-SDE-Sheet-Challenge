@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class Solution {
+    public static ArrayList<Integer> findSpans(ArrayList<Integer> price) {
+        // Write your code here.
+        ArrayList<Integer> ans = new ArrayList<>();
+        Stack<Integer> st = new Stack<>();
+        st.add(0);
+        ans.add(1);
+        for(int i=1;i<price.size();i++){
+            while(st.size()!=0 && price.get(st.peek())<=price.get(i)){
+                st.pop();
+            }
+            if(st.size()==0){
+                ans.add(i+1);
+            }
+            else{
+                ans.add(i-st.peek());
+            }
+            st.add(i);
+        }
+        return ans;
+    }
+}
