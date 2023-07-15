@@ -1,0 +1,39 @@
+import java.util.* ;
+import java.io.*; 
+
+import java.util.ArrayList;
+
+public class Solution 
+{
+
+	public static ArrayList<Integer> getMaximumOfSubarrays(ArrayList<Integer> nums, int k) 
+	{
+		//	  Write your code here.
+		int n = nums.size();
+		Deque<Integer> q = new ArrayDeque<>();
+		ArrayList<Integer> ans = new ArrayList<>();
+		int i=0;
+		int j=0;
+		while(j<k){
+			while(q.size()!=0 && nums.get(q.peekLast())<=nums.get(j)){
+				q.pollLast();
+			}
+			q.addLast(j);
+			j++;
+		}
+		ans.add(nums.get(q.peek()));
+		while(j<n){
+			i++;
+			if(q.size()!=0 && q.peek()<i){
+				q.poll();
+			}
+			while(q.size()!=0 && nums.get(q.peekLast())<=nums.get(j)){
+				q.pollLast();
+			}
+			q.addLast(j);
+			j++;
+			ans.add(nums.get(q.peek()));
+		}
+		return ans;
+	}
+}
