@@ -1,0 +1,77 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+	Following is the Binary Tree node structure:
+
+	class BinaryTreeNode<T> {
+	    T data;
+	    BinaryTreeNode<T> left;
+	    BinaryTreeNode<T> right;
+
+	    public BinaryTreeNode(T data) {
+	        this.data = data;
+	    }
+	}
+
+************************************************************/
+class Pair{
+	BinaryTreeNode<Integer> node;
+	int i;
+	Pair(BinaryTreeNode<Integer> a, int b){
+		node = a;
+		i = b;
+	}
+}
+
+public class Solution {
+    public static List<List<Integer>> getTreeTraversal(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+
+		Stack<Pair> st = new Stack<>();
+		List<Integer> inorder = new ArrayList<>();
+		List<Integer> preorder = new ArrayList<>();
+		List<Integer> postorder = new ArrayList<>();
+		List<List<Integer>> ans = new ArrayList<>();
+		if(root == null){
+			ans.add(inorder);
+			ans.add(preorder);
+			ans.add(postorder);
+			return ans;}
+		BinaryTreeNode<Integer> a = root;
+		st.add(new Pair(a, 0));
+		preorder.add(a.data);
+		a = a.left;
+		while(st.size()!=0){
+			if(a==null){
+				Pair p = st.pop();
+				a = p.node;
+				if(p.i==0){
+				//System.out.println("in"+" "+0 +" "+a.data);
+					inorder.add(a.data);
+					st.add(new Pair(a, 1));
+					a = a.right;
+
+				}
+				else{
+				//System.out.println("post"+" "+1 +" "+a.data);
+
+					postorder.add(a.data);
+					//st.add(new Pair(a, 2));
+					a = null;
+				}
+			}
+			else{
+				st.add(new Pair(a, 0));
+				//System.out.println("pre" +" "+a.data);
+				preorder.add(a.data);
+				a = a.left;
+			}
+		}		
+		ans.add(inorder);
+		ans.add(preorder);
+		ans.add(postorder);
+
+		return ans;
+    }
+}
