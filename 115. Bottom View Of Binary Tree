@@ -1,0 +1,57 @@
+import java.util.* ;
+import java.io.*; 
+/*********************************************
+
+    class BinaryTreeNode {
+        int val;
+        BinaryTreeNode left;
+        BinaryTreeNode right;
+
+        BinaryTreeNode(int val) {
+            this.val = val;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+*********************************************/
+class Pair{
+    int cnt;
+    BinaryTreeNode n;
+    Pair(BinaryTreeNode a, int b){
+        n = a;
+        cnt = b;
+
+    }
+}
+
+public class Solution {
+    public static ArrayList<Integer> bottomView(BinaryTreeNode root) {
+         // Write your code here.      
+         HashMap<Integer,Integer> map = new HashMap<>();
+
+         map.put(0,root.val);
+         Queue<Pair> q = new LinkedList<>();
+         q.add(new Pair(root,0));
+         int max = 0;
+         int min = Integer.MAX_VALUE;
+         while(q.size()!=0){
+             Pair p = q.poll();
+             map.put(p.cnt, p.n.val);
+             max = Math.max(max, p.cnt);
+             min = Math.min(p.cnt,min);
+             if(p.n.left!=null){
+                 q.add(new Pair(p.n.left, p.cnt-1));
+             }
+             if(p.n.right!=null){
+                 q.add(new Pair(p.n.right, p.cnt+1));
+             }
+         }
+         ArrayList<Integer> ans = new ArrayList<>();
+
+         for(int i=min;i<=max;i++){
+             ans.add(map.get(i));
+         }
+         return ans;
+    }
+}
