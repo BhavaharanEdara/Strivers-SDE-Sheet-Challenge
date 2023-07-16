@@ -29,7 +29,8 @@ public class Solution {
     public static ArrayList<Integer> bottomView(BinaryTreeNode root) {
          // Write your code here.      
          HashMap<Integer,Integer> map = new HashMap<>();
-
+         ArrayList<Integer> ans = new ArrayList<>();
+		 if(root==null){return ans;}
          map.put(0,root.val);
          Queue<Pair> q = new LinkedList<>();
          q.add(new Pair(root,0));
@@ -47,7 +48,6 @@ public class Solution {
                  q.add(new Pair(p.n.right, p.cnt+1));
              }
          }
-         ArrayList<Integer> ans = new ArrayList<>();
 
          for(int i=min;i<=max;i++){
              ans.add(map.get(i));
