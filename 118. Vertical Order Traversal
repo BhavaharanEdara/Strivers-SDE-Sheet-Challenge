@@ -1,0 +1,73 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+class Pair{
+    int i;
+    TreeNode<Integer> node;
+    Pair(TreeNode<Integer> a, int b){
+        node = a;
+        i = b;
+    }
+}
+public class Solution 
+{
+    public static ArrayList<Integer> verticalOrderTraversal(TreeNode<Integer> root) 
+    {
+        //    Write your code here.
+        HashMap<Integer,ArrayList<Integer>> map = new HashMap<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        Queue<Pair> q = new LinkedList<>();
+        TreeNode<Integer> a = root;
+        int max = 0;
+        int min = 0;
+        q.add(new Pair(a, 0));
+        while(q.size()!=0){
+            Pair p = q.poll();
+            max = Math.max(p.i,max);
+            min = Math.min(p.i,min);
+            if(map.containsKey(p.i)){
+                map.get(p.i).add(p.node.data);
+            }
+            else{
+                ArrayList<Integer> arr = new ArrayList<>();
+                arr.add(p.node.data);
+                map.put(p.i, arr);
+            }
+
+            if(p.node.left!=null){
+                q.add(new Pair(p.node.left, p.i-1));
+            }
+            if(p.node.right!=null){
+                q.add(new Pair(p.node.right, p.i+1));
+            }
+
+        }
+
+        for(int i=min;i<=max;i++){
+            ans.addAll(map.get(i));
+        }
+        return ans;
+
+
+    }
+}
