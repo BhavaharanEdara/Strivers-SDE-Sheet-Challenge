@@ -1,0 +1,81 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T>
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+public class Solution 
+{
+    static boolean find(TreeNode<Integer> root, int a){
+        if(root==null){return false;}
+        if(root.data==a){return true;}
+        
+        boolean l = find(root.left, a);
+        boolean r = find(root.right, a);
+        return l||r;
+    }
+    static int lca(TreeNode<Integer> root, int x , int y){
+        
+        if(root==null){
+            return -1;
+        }
+        
+        if(root.data==x){
+            if(find(root, y)){
+                return x;
+            }
+            else{
+                return 0;
+            }
+        }if(root.data==y){
+            if(find(root, x)){
+                return y;
+            }
+            else{
+                return 0;
+            }
+        }
+
+        int l = lca(root.left, x , y);
+        int r = lca(root.right, x, y);
+        if(l==0 && r==0){
+            return root.data;
+        }
+        if(l!=-1 && l!=0){
+            return l;
+        }
+        if(r!=-1 && r!=0){
+            return r;
+        }
+        if(l==0|| r==0){
+            return 0;
+        }
+    
+        return -1;
+    }
+       
+    
+    public static int lowestCommonAncestor(TreeNode<Integer> root, int x, int y) 
+    {
+        //    Write your code here.
+        int a = lca(root, x, y);
+        return a;
+    }
+}
