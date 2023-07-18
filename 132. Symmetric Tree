@@ -1,0 +1,44 @@
+//import com.sun.source.tree.BinaryTree;
+
+//import org.graalvm.compiler.graph.spi.Canonicalizable.Binary;
+
+/*****************************************************************
+
+    Following is the representation for the Binary Tree Node:
+
+    class BinaryTreeNode<T> {
+        T data;
+        BinaryTreeNode<T> left;
+        BinaryTreeNode<T> right;
+
+        public BinaryTreeNode(T data) {
+            this.data = data;
+        }
+    }
+
+****************************************************************/
+
+public class Solution {
+
+    static boolean Symmetric(BinaryTreeNode<Integer> root1, BinaryTreeNode<Integer> root2){
+        if(root1==null && root2==null){
+            return true;
+        }
+        else if(root1==null || root2==null){
+            return false;
+        }
+
+        if(!root1.data.equals(root2.data)){
+            return false;
+        }
+
+        boolean l = Symmetric(root1.left, root2.right);
+        boolean r = Symmetric(root1.right, root2.left);
+        return l&&r;
+    }
+
+    public static boolean isSymmetric(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+        return Symmetric(root, root);
+    }
+}
