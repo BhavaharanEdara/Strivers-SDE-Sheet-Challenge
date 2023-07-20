@@ -1,0 +1,52 @@
+import java.util.* ;
+import java.io.*; 
+/*
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+*/
+
+public class Solution {
+    static void LCA(TreeNode<Integer>root, TreeNode<Integer>p, TreeNode<Integer>q, int[] min){
+        if(root==null){
+            return;
+        }
+        if(root.data<p.data){
+                    LCA(root.right, p, q, min);
+        }
+        if(root.data>q.data){
+        LCA(root.left, p, q, min);}
+
+        else if(root.data>=p.data && root.data<=q.data){
+            min[0] = root.data;
+        }
+        return;
+    }
+	public static TreeNode<Integer> LCAinaBST(TreeNode<Integer> root, TreeNode<Integer> p, TreeNode<Integer> q) 
+    {		
+        // Write your code here
+        int[] min = new int[1];
+        if(p.data>q.data){
+            LCA(root, q, p, min);
+        }
+        else{
+            LCA(root, p , q, min);
+        }
+        return new TreeNode<>(min[0]);
+	}
+}
