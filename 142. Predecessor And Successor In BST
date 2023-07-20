@@ -1,0 +1,131 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Tree node structure
+
+
+*************************************************************/
+import java.util.ArrayList;
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+
+public class Solution {
+
+	static int predecessor(BinaryTreeNode<Integer> root , int key){
+		if(root==null){return -1;}
+		if(root.data<key){
+			int r = predecessor(root.right, key);
+			if(root.data<key){
+				return Math.max(r,root.data);
+			}
+			return r;
+		}
+		else if(root.data>key){
+			int l = predecessor(root.left, key);
+			if(root.data<key){
+				return Math.max(l,root.data);
+			}
+			return l;
+		}
+		else{
+			int l = predecessor(root.left, key);
+			if(root.data<key){
+				return Math.max(l,root.data);
+			}
+			return l;		
+		}
+	}
+	static int successor(BinaryTreeNode<Integer> root , int key){
+		if(root==null){return Integer.MAX_VALUE;}
+		if(root.data<key){
+			int r = successor(root.right, key);
+			if(root.data>key){
+				return Math.min(r,root.data);
+			}
+			return r;
+		}
+		else if(root.data>key){
+			int l = successor(root.left, key);
+			if(root.data>key){
+				return Math.min(l,root.data);
+			}
+			return l;
+		}
+		else{
+			int r = successor(root.right, key);
+			if(root.data>key){
+				return Math.min(r,root.data);
+			}
+			return r;		
+		}
+	}
+	public static ArrayList<Integer> predecessorSuccessor(BinaryTreeNode<Integer> root, int key) {
+		// Write your code here.
+		ArrayList<Integer> ans = new ArrayList<>();
+		ans.add(predecessor(root, key));
+		int a = successor(root, key);
+		if(a==Integer.MAX_VALUE){
+			ans.add(-1);
+		}
+		else{
+			ans.add(successor(root, key));
+		}
+		return ans;
+	}
+}
+
+
+//Method 2
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+
+	static int predecessor(BinaryTreeNode<Integer> root , int key){
+		BinaryTreeNode<Integer> pred = new BinaryTreeNode<Integer>(-1) ;
+		while(root!=null){
+			if(root.data>=key){
+				root = root.left;
+			}
+			else{
+				pred = root;
+				root = root.right;
+			}
+		}
+		return pred.data;
+	
+	}
+	static int successor(BinaryTreeNode<Integer> root , int key){
+		BinaryTreeNode<Integer> succ = new BinaryTreeNode<Integer>(-1) ;
+		while(root!=null){
+			if(root.data<=key){
+				root = root.right;
+			}
+			else{
+				succ = root;
+				root = root.left;
+			}
+		}
+		return succ.data;
+	}
+	public static ArrayList<Integer> predecessorSuccessor(BinaryTreeNode<Integer> root, int key) {
+		// Write your code here.
+		ArrayList<Integer> ans = new ArrayList<>();
+		ans.add(predecessor(root, key));
+		
+		ans.add(successor(root, key));
+		
+		return ans;
+	}
+}
