@@ -1,0 +1,48 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T>
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+public class Solution {
+
+    public static int floorInBST(TreeNode<Integer> root, int X) {
+        //    Write your code here.	static int predecessor(BinaryTreeNode<Integer> root , int key){
+		TreeNode<Integer> pred = new TreeNode<>(-1);
+        int ans = -1;
+		while(root!=null){
+			if(root.data>=X){
+				if(root.data==X){
+                    return X;
+                }
+                root = root.left;
+                
+			}
+			else{
+				pred = root;
+				root = root.right;
+			}
+		}
+		return pred.data;
+	
+	
+
+    }
+}
