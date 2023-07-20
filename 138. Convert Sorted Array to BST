@@ -1,0 +1,42 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+    Following is the class structure of the TreeNode class:
+
+    class TreeNode<T> {
+        public T data;
+        public TreeNode<T> left;
+        public TreeNode<T> right;
+
+        TreeNode(T data) {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    }
+
+
+*****************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+
+    static TreeNode<Integer> bst(ArrayList<Integer> arr, int i, int j){
+        if(i>j){
+            return null;
+        }
+
+        int mid = (j+i)/2;
+        TreeNode<Integer> root = new TreeNode<>(arr.get(mid));
+        root.left = bst(arr, i, mid-1);
+        root.right = bst(arr, mid+1, j);
+        return root;
+    }
+    public static TreeNode<Integer> sortedArrToBST(ArrayList<Integer> arr, int n) {
+        // Write your code here.
+        return bst(arr, 0, n-1);
+        
+    }
+}
