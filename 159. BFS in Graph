@@ -1,0 +1,40 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	public static ArrayList<Integer> BFS(int vertex, int edges[][]){
+		// WRITE YOUR CODE HERE
+		int[][] graph = new int[vertex][vertex];
+		
+		
+		for(int i=0;i<edges[0].length;i++){
+			graph[edges[0][i]][edges[1][i]] = 1;
+			graph[edges[1][i]][edges[0][i]] = 1;
+
+		}
+		
+		ArrayList<Integer> ans = new ArrayList<>();
+		int[] visited = new int[vertex];
+		Arrays.fill(visited,-1);
+		Queue<Integer>q = new LinkedList<>();
+		for(int x=0;x<vertex;x++){
+			if(visited[x]==-1){
+				q.add(x);
+				visited[x] = 1;
+				while(q.size()!=0){
+					int a = q.poll();
+					ans.add(a);
+					for(int i=0;i<vertex;i++){
+						
+						if(graph[a][i]==1 && visited[i]==-1 && a!=i){
+							visited[i] = 1;
+							q.add(i);
+						}
+					}
+				}
+			}
+		}
+		return ans;
+	}
+	
+}
+
