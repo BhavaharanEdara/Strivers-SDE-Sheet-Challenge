@@ -1,0 +1,34 @@
+
+public class Solution {
+
+	static int loweb(int[] dp, int low , int high, int ele){
+		
+		while(low<high){
+			int mid = (low+high)/2;
+			if(dp[mid]<ele){
+				low = mid+1;
+			}
+			else{
+				high = mid;
+			}
+		}		
+		return low;
+	}
+
+	public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+		int[] dp = new int[arr.length];
+		dp[0] = arr[0];
+		int ind = 1;
+		for(int i=1;i<arr.length;i++){
+			int lb = loweb(dp, 0, ind, arr[i]);
+			dp[lb] = arr[i];
+			if(lb==ind){
+				ind++;
+			}
+			
+		}
+		return ind;
+	}
+
+}
