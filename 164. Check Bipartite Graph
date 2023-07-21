@@ -1,0 +1,45 @@
+import java.util.*;
+
+public class Solution {
+
+    static boolean dfs(ArrayList<ArrayList<Integer>> graph, int i, int[] ident,int c){
+
+        ident[i] = c;
+        for(int a=0;a<graph.size();a++){
+            if(graph.get(i).get(a)==1){
+                if(ident[a]==-1){
+                    boolean b;
+                    if(c==0){
+                        b = dfs(graph, a, ident, 1);
+                    }
+                    else{
+                        b = dfs(graph, a, ident, 0);
+                    }
+                    if(!b){return b;}
+
+                }
+                else{
+                    if(ident[a]==c){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isGraphBirpatite(ArrayList<ArrayList<Integer>> edges) {
+
+        // Write your code here
+        int[] ident = new int[edges.size()];
+        Arrays.fill(ident,-1);
+        for(int i=0;i<edges.size();i++){
+            if(ident[i]==-1){
+                boolean a = dfs(edges, i, ident, 0);
+                if(!a){return a;}
+            }
+
+        }
+        return true;
+    }
+}
