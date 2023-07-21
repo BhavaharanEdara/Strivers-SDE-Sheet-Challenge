@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class Solution {
+
+    static boolean dfs(ArrayList<ArrayList<Integer>>graph, int i,int prev, int[]visited, int n){
+        if(visited[i]==1){
+            return true;
+        }
+
+        visited[i] = 1;
+        for(int a : graph.get(i)){
+            if(a!=prev){
+                boolean t = dfs(graph, a, i, visited, n);
+                if(t){return true;}
+            }
+        }
+        return false;
+    }  
+    
+    public static String cycleDetection(int[][] edges, int n, int m) {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for(int i=0;i<=n;i++){
+        	graph.add(new ArrayList< Integer >());
+        }
+        for(int i=0;i<m;i++){
+			graph.get(edges[i][1]).add(edges[i][0]);
+	        graph.get(edges[i][0]).add(edges[i][1]);
+	    
+		}
+
+        int[] visited = new int[n+1];
+        for(int i=1;i<=n;i++){
+            if(visited[i] == 0){
+                boolean ans = dfs(graph,i, -1, visited, n);
+                if(ans){
+                    return "Yes";
+                }
+            }
+        }
+        return "No";
+    }
+    
+}
