@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+public class Solution {
+
+  static boolean dfs(int i, ArrayList<ArrayList<Integer>> graph, int[] visited, int[] path){
+    if(visited[i]==1 && path[i]==1){
+      return true;
+    }
+    visited[i] = 1;
+    path[i] = 1;
+    for(int a: graph.get(i)){
+      boolean ans = dfs(a, graph, visited, path);
+      path[a] = 0;
+      if(ans){return ans;}
+    }
+    return false;
+  }
+  public static boolean detectCycleInDirectedGraph(int n, ArrayList < ArrayList < Integer >> edges) {
+    // Write your code here.
+    ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+    for(int i=0;i<n+1;i++){
+      graph.add(new ArrayList<>());
+    }
+    for(int i=0;i<edges.size();i++){
+      graph.get(edges.get(i).get(0)).add(edges.get(i).get(1));
+    }
+
+    int[] visited = new int[n+1];
+    int[] path = new int[n+1];
+
+    for(int i=1;i<=n;i++){
+      if(visited[i]==0){
+        boolean a=dfs(i, graph, visited, path);
+        path[i] = 0;
+        if(a){return a;}
+      }
+    }
+    return false;
+  }
+}
