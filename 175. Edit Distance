@@ -1,0 +1,40 @@
+
+public class Solution {
+
+    static int edit(String s, String t, int i, int j){
+        if(i>=s.length() || j>=t.length()){return s.length()-i+t.length()-j;}
+        if(s.charAt(i)==t.charAt(j)){
+            return edit(s, t, i+1,j+1);
+        }
+        int a = 1 +edit(s, t, i+1, j);
+        int b = 1 +edit(s, t, i+1, j+1);
+        int c = 1 +edit(s, t, i+1, j);
+
+        return Math.min(a, Math.min(b,c));
+        
+    }
+
+    public static int editDistance(String str1, String str2) {
+        //Your code goes here
+        int[][] dp = new int[str1.length()+1][str2.length()+1];
+        
+        for(int i=0;i<str1.length()+1;i++){
+            dp[i][str2.length()] = str1.length()-i;
+        }
+        for(int i=0;i<str2.length()+1;i++){
+            dp[str1.length()][i] = str2.length()-i;
+        }
+        for(int i=str1.length()-1;i>=0;i--){
+            for(int j=str2.length()-1;j>=0;j--){
+                if(str1.charAt(i)==str2.charAt(j)){
+                    dp[i][j] = dp[i+1][j+1];
+                }
+                else{
+                    dp[i][j] = 1+ Math.min(dp[i+1][j+1], Math.min(dp[i+1][j],dp[i][j+1]));
+                }
+            }
+        }
+        
+        return dp[0][0];
+    }
+}
