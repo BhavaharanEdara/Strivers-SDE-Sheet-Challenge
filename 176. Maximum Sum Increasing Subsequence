@@ -1,0 +1,37 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+
+    static int maxi(ArrayList<Integer> arr, int i, int prev, int n){
+        if(i>=n){return 0;}
+
+        int in = 0;
+        if(arr.get(i)>prev){
+            in = arr.get(i) + maxi(arr, i+1, arr.get(i), n);
+        }
+        int ex = maxi(arr, i+1, prev, n);
+
+        return Math.max(in, ex);
+    }
+    public static int maxIncreasingDumbbellsSum(ArrayList<Integer> rack, int n) {
+        // Write your code here.
+
+        int[] dp = new int[n];
+        dp[0] = rack.get(0);
+        int ans = dp[0];
+        for(int i=1;i<n;i++){
+            int max= 0;
+            for(int j=i-1;j>=0;j--){
+                if(rack.get(j)<rack.get(i)){
+                    max = Math.max(dp[j], max);
+                }
+            }
+            dp[i] = max+rack.get(i);
+            ans = Math.max(ans, dp[i]);
+        }
+
+        return ans;
+    }
+}
