@@ -1,0 +1,72 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+    Following is the class structure of the LinkedListNode class:
+	
+	class LinkedListNode<T> {
+    	T data;
+    	LinkedListNode<T> next;
+
+    	public LinkedListNode(T data) {
+        	this.data = data;
+    	}
+	}
+
+*****************************************************************/
+
+public class Solution {
+
+	public static boolean isPalindrome(LinkedListNode<Integer> head) {
+		if(head==null || head.next==null){return true;}
+		LinkedListNode<Integer> f = head;
+		LinkedListNode<Integer> s = head;
+		LinkedListNode<Integer> prev = null;
+
+		LinkedListNode<Integer> next = null;
+
+		while(s!=null && s.next!=null){
+			s = s.next.next;
+			next = f.next;
+			f.next = prev;
+			prev = f;
+			f = next;
+
+		}
+
+		if(s==null){
+			s = f;
+			f = prev;
+
+			while(f!=null && s!=null){
+				if(!f.data.equals(s.data)){
+					//System.out.println(s.data+" "+f.data);
+					return false;}
+				f = f.next;
+				s = s.next;
+			}
+		
+			if(f==null && s==null){return true;}
+		
+		}
+		if(s.next==null){
+			s = f.next;
+			f = prev;
+
+			while(f!=null && s!=null){
+				if(!f.data.equals(s.data)){
+					return false;}
+				f = f.next;
+				s = s.next;
+			}
+		
+			if(f==null && s==null){return true;}
+		
+			
+		}
+		return true;
+		
+
+
+	}
+}
