@@ -28,23 +28,8 @@ public class Solution {
         Arrays.sort(arr);
         ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
         ArrayList<Integer> in = new ArrayList<>();
-        ans.add(in);
-        in = new ArrayList<>();
+        uniquesets(n, arr, 0, in,ans);
 
-        for(int i=0;i<n;i++){
-            if(i==0){
-                in.add(arr[0]);
-                uniquesets(n, arr, i+1, in,ans);
-                //System.out.println(ans);
-
-                in = new ArrayList<>();
-            }
-            else if(arr[i]!=arr[i-1]){
-                in.add(arr[i]);
-                uniquesets(n, arr, i+1, in, ans);
-                in = new ArrayList<>();
-            }
-        }
         Collections.sort(ans, new Comparator<ArrayList<Integer>>() {
 			public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
 				int x = Math.min(a.size(), b.size());
@@ -64,7 +49,6 @@ public class Solution {
 				return 1;
 			}
 		});
-
 
         return ans;
     }
