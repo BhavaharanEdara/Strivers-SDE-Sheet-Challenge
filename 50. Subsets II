@@ -1,0 +1,72 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+
+    static void uniquesets(int n, int[] arr, int i, ArrayList<Integer> in, ArrayList<ArrayList<Integer>> ans){
+        
+        if(i>=n){
+            //System.out.println(in);
+            ans.add(new ArrayList<>(in));
+            return;
+        }
+        
+        in.add(arr[i]);
+        uniquesets(n, arr, i+1, in, ans);
+        in.remove(in.size()-1);
+        int a = i+1;
+
+        while(a<n && arr[a]==arr[a-1]){a++;}
+        uniquesets(n, arr, a, in, ans);
+        
+
+
+        return;
+    }
+    public static ArrayList<ArrayList<Integer>> uniqueSubsets(int n, int arr[]) {
+        // Write your code here..
+        Arrays.sort(arr);
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> in = new ArrayList<>();
+        ans.add(in);
+        in = new ArrayList<>();
+
+        for(int i=0;i<n;i++){
+            if(i==0){
+                in.add(arr[0]);
+                uniquesets(n, arr, i+1, in,ans);
+                //System.out.println(ans);
+
+                in = new ArrayList<>();
+            }
+            else if(arr[i]!=arr[i-1]){
+                in.add(arr[i]);
+                uniquesets(n, arr, i+1, in, ans);
+                in = new ArrayList<>();
+            }
+        }
+        Collections.sort(ans, new Comparator<ArrayList<Integer>>() {
+			public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+				int x = Math.min(a.size(), b.size());
+				for (int i = 0; i < x; i++) {
+					if ((int) a.get(i) == (int) b.get(i))
+						continue;
+					else if ((int) a.get(i) > (int) b.get(i))
+						return 1;
+					else
+						return -1;
+				}
+				if (a.size() > x)
+					return 1;
+				else if (b.size() > x)
+					return -1;
+
+				return 1;
+			}
+		});
+
+
+        return ans;
+    }
+
+}
