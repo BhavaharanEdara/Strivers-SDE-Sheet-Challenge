@@ -1,0 +1,65 @@
+/**
+ * Definition of linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next) {
+ *          this->data = data;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+Node *addTwoNumbers(Node *num1, Node *num2)
+{
+    // Write your code here.
+    Node *node1 = num1;
+    Node *node2 = num2;
+    Node *Head = NULL;
+
+    Node *node, *prev = NULL;
+    int sum = 0, carry = 0;
+
+    while (node1 != NULL || node2 != NULL){
+        sum = carry;
+        if (node1 != NULL){
+            sum += node1->data ;
+            node1 = node1->next;
+        }
+
+        if (node2 != NULL){
+            sum += node2->data;
+            node2 = node2->next;
+        }
+        node = new Node(sum % 10);
+        if (Head == NULL){
+            Head = node;
+        }
+        else{
+            prev->next = node;
+        }
+        prev = node;
+        carry = sum / 10;
+    }
+
+    if (carry > 0)
+    {
+        prev->next = new Node(carry);
+    }
+
+    return Head;
+
+
+
+}
