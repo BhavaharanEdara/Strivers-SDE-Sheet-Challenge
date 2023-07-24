@@ -1,0 +1,41 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    
+    static boolean palindrome(String s, int start, int end){
+        int i = start;
+        int j = end;
+        while(i<j){
+            if(s.charAt(i)!=s.charAt(j)){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+        
+    }
+    static void part(String s, int ind, List<String> inn, List<List<String>> ans){
+        if(ind==s.length()){
+            ans.add(new ArrayList<>(inn));
+            return;
+        }
+        for(int i=ind;i<s.length();i++){
+            if(palindrome(s,ind, i)){
+                inn.add(s.substring(ind, i+1));
+                part(s, i+1, inn, ans);
+                inn.remove(inn.size()-1);
+            }
+        }
+        return;
+    }
+    
+    public static List<List<String>> partition(String s) {
+        // Write your code here.
+        List<List<String>> ans = new ArrayList<>();
+        List<String> inn = new ArrayList<>();
+        part(s, 0, inn, ans);
+        return ans;
+        
+    }
+}
