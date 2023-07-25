@@ -1,0 +1,42 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+    static void addtoarlist(int[][] arr, ArrayList<ArrayList<Integer>> ans){
+
+        ArrayList<Integer> temp = new ArrayList<>();
+        for(int i=0; i<arr.length; i++){
+            for(int j=0; j<arr.length; j++)
+                temp.add(arr[i][j]);
+        }
+        ans.add(temp);
+    }
+
+    static void rat(int[][] maze, ArrayList<ArrayList<Integer>> ans, int n, int[][] arr, int r, int c){
+        
+        if(r<0 || r>=n || c<0 || c>=n){return;}
+        if(r==n-1 && c==n-1){
+            arr[r][c] = 1;
+            addtoarlist(arr, ans);
+            return;
+        }
+        if(maze[r][c]==0 || arr[r][c]!=0){
+            return;
+        }
+        arr[r][c] = 1;
+        rat(maze,ans, n, arr, r+1, c);
+        rat(maze,ans, n, arr, r, c+1);
+        rat(maze,ans, n, arr, r-1, c);
+        rat(maze,ans, n, arr, r, c-1);
+        arr[r][c] = 0;
+        return;
+    }
+    public static ArrayList<ArrayList<Integer>> ratInAMaze(int[][] maze, int n) {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> inn = new ArrayList<>();
+        int[][] arr = new int[n][n];
+        rat(maze, ans, n, arr, 0 , 0);
+        return ans;
+    }
+}
