@@ -1,0 +1,42 @@
+public class Solution {
+
+	static boolean isvalid(int[][] mat , int r, int c, int ele){
+		for(int i=0;i<9;i++){
+			if(mat[i][c]==ele){return false;}
+			if(mat[r][i]==ele){return false;}
+
+			if (mat[3*(r/3)+i/3][3*(c/3)+i%3]==ele){return false;}	
+
+		}
+		return true;
+	}
+  	
+
+	static boolean sudoku(int[][] matrix){
+
+		for(int a=0;a<matrix.length;a++){
+			for(int b = 0;b<matrix[0].length;b++){
+				if(matrix[a][b] ==0){
+					for(int m=1;m<=9;m++){
+						if(isvalid(matrix, a, b, m)){
+							matrix[a][b] = m;
+							boolean x = sudoku(matrix);
+							if(x){return true;}
+							matrix[a][b] = 0;
+						}
+					}
+					return false;
+
+				}
+			}
+		}
+		return true;
+	}
+
+	public static boolean isItSudoku(int matrix[][]) {
+
+		// Write your code here.
+		return sudoku(matrix);
+
+	}
+}
