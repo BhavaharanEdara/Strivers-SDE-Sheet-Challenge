@@ -1,0 +1,50 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+
+	static void addtoans(ArrayList<String> inn, ArrayList<String> ans){
+		String a = "";
+		for(String i: inn){
+			a += i+" ";
+		}
+		ans.add(a);
+		return;
+	}
+
+	static void wbreak(String s, HashMap<String, Integer> dict, ArrayList<String> inn, ArrayList<String> ans, int i){
+		if(i==s.length()){
+			if(inn.size()!=0){
+				addtoans(inn, ans);
+				return;
+			}
+			return;
+
+		}
+
+		for(int a=i;a<s.length();a++){
+			if(dict.containsKey(s.substring(i,a+1))){
+				inn.add(s.substring(i, a+1));
+				wbreak(s, dict, inn, ans, a+1);
+				inn.remove(inn.size()-1);
+			}
+		}
+		return;
+
+	}
+
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary){
+
+		// Write your code here.
+		HashMap<String , Integer> map = new HashMap<>();
+		for(int i=0;i<dictionary.size();i++){
+			map.put(dictionary.get(i), 1);
+		}
+		ArrayList<String> ans = new ArrayList<>();
+		ArrayList<String> inn = new ArrayList<>();
+		wbreak(s, map, inn, ans, 0);
+
+		return ans;
+	}
+}
