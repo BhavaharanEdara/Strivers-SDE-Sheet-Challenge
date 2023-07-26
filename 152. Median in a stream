@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Solution {
+    public static int[] findMedian(int[] arr, int n) {
+        // Write your code here.
+        PriorityQueue<Integer>maxHeap= new PriorityQueue<>();
+		PriorityQueue<Integer>minHeap= new PriorityQueue<>((a,b)->b-a);
+        int[] ans = new int[n];
+        int x = 0;
+
+		for(int i=0;i<arr.length;i++){
+			if(minHeap.size()==0){
+				minHeap.add(arr[i]);
+                ans[x++] = minHeap.peek(); 
+			}
+			
+			else{
+				if(arr[i]<=minHeap.peek()){
+					minHeap.add(arr[i]);
+				}
+				else{
+					maxHeap.add(arr[i]);
+				}
+				if(i%2==0){
+					while(minHeap.size()-maxHeap.size()!=1){
+						if(minHeap.size()<maxHeap.size()){
+							int a = maxHeap.peek();
+							maxHeap.remove();
+							minHeap.add(a);
+						}
+						else{
+							int a = minHeap.peek();
+							minHeap.remove();
+							maxHeap.add(a);
+						}
+					}
+                    ans[x++] = minHeap.peek(); 
+
+				}
+				else{
+					while(minHeap.size()!=maxHeap.size()){
+						if(minHeap.size()<maxHeap.size()){
+							int a = maxHeap.peek();
+							maxHeap.remove();
+							minHeap.add(a);
+						}
+						else{
+							int a = minHeap.peek();
+							minHeap.remove();
+							maxHeap.add(a);
+						}
+						
+					}
+				    int b = (minHeap.peek()+maxHeap.peek())/2;
+                    ans[x++] = b; 
+
+				}
+			}
+		}
+
+		return ans;
+
+    
+    }
+}
