@@ -1,0 +1,94 @@
+/*
+    Time complexity: O( N * log( N ) )
+    Space complexity: O( N )
+
+    Where N is the size of heap array.
+*/
+
+public class Solution {
+    
+
+    static void heapify(int[] heap, int k, int size) {
+
+        int l = 2*k +1 ;
+        int r = 2*k +2;
+
+        int p = k;
+
+        if (l<size && heap[l]<heap[k]) {
+            p = l;
+        }
+
+        if (r<size && heap[r]<heap[p]) {
+            p = r;
+        }
+        if (p != k) {
+            int temp = heap[k];
+            heap[k] = heap[p];
+            heap[p] = temp;
+            heapify(heap, p, size);
+        }
+    }
+
+    static int ind;
+
+    static void insert(int[] heap, int val) {
+
+        heap[ind] = val;
+        int i = ind;
+        ind += 1;
+        while (i != 0 && heap[(i-1)/2] > heap[i]) {
+            int tmp = heap[i];
+            heap[i] = heap[(i-1)/2];
+            heap[(i-1)/2] = tmp;
+            i = (i-1)/2;
+        }
+    }
+
+    static int extractMin(int[] heap) {
+
+        if (ind == 1) {
+            ind -= 1;
+            return heap[0];
+        }
+        int val = heap[0];
+        heap[0] = heap[ind - 1];
+        ind -= 1;
+        heapify(heap, 0, ind);
+
+        return val;
+    }
+
+    // minHeap function which take size of Queries and Queries as Input.
+// Returns an array out outputs depending on the query.
+    static int[] minHeap(int n, int[][] q) {
+
+        int size = 0;
+
+        int[] heap = new int[n];
+
+        int tot = 0;
+        for(int i=0;i<n;i++){
+            if(q[i][0]==1)tot++;
+        }
+
+        int[] ans = new int[tot];
+        int id = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            if (q[i][0] == 0) {
+                ind = size;
+                insert(heap, q[i][1]);
+                size = ind;
+            } else {
+                ind = size;
+                ans[id++] = extractMin(heap);
+                size = ind;
+            }
+        }
+
+        // Return the ans array.
+        return ans;
+    }
+}
