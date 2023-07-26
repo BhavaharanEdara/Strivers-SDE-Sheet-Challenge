@@ -1,0 +1,49 @@
+import java.util.*;
+
+
+public class Solution {
+
+	static int maxHeap(ArrayList<Integer> arr, int n, int k ){
+		PriorityQueue<Integer>pq= new PriorityQueue<>((a,b)->b-a);
+
+		for(int i=0;i<n;i++){
+			pq.add(arr.get(i));
+		}
+
+		int f = k;
+		int a = 0;
+		while(f>0){
+			a = pq.peek();
+			pq.remove();
+			f--;
+		}
+		return a;
+
+	}
+	static int minHeap(ArrayList<Integer> arr, int n, int k ){
+		PriorityQueue<Integer>pq= new PriorityQueue<>();
+
+		for(int i=0;i<n;i++){
+			pq.add(arr.get(i));
+		}
+
+		int f = k;
+		int a = 0;
+		while(f>0){
+			a = pq.peek();
+			pq.remove();
+			f--;
+		}
+		return a;
+
+	}
+	public static ArrayList<Integer> kthSmallLarge(ArrayList<Integer> arr, int n, int k) {
+		//Write your code here
+		ArrayList<Integer> ans = new ArrayList<>();
+		ans.add(minHeap(arr, n, k));
+		ans.add(maxHeap(arr, n, k));
+		return ans;
+
+
+	}
+}
