@@ -1,0 +1,103 @@
+import java.util.* ;
+import java.io.*; 
+
+class Node{
+    Node[] links = new Node[26];
+    int ew = 0;
+    int cp = 0;
+
+    public Node() {
+        
+    }
+    boolean containsKey(char ch) {
+        return (links[ch - 'a'] != null); 
+    }
+    Node get(char ch) {
+        return links[ch-'a']; 
+    }
+    void put(char ch, Node node) {
+
+        links[ch-'a'] = node;
+        node.cp += 1; 
+    }
+    void setEnd() {
+        ew++;
+    }
+
+}
+public class Trie {
+
+    private Node root;
+    public Trie() {
+        // Write your code here.
+        root = new Node();
+    }
+
+    public void insert(String word) {
+        // Write your code here.
+        Node n = root;
+        for(int i=0;i<word.length();i++){
+            if(!n.containsKey(word.charAt(i))){
+                n.put(word.charAt(i), new Node());
+                n = n.get(word.charAt(i));
+            }
+            else{
+                n = n.get(word.charAt(i));
+                n.cp += 1;
+            }
+
+        }
+        n.ew += 1;
+
+    }
+
+    public int countWordsEqualTo(String word) {
+        // Write your code here.
+        Node n = root;
+        for(int i=0;i<word.length();i++){
+            char ch = word.charAt(i);
+            if(n.containsKey(ch)){
+                n = n.get(ch);
+            }
+            else{
+                return 0;
+            }
+        }
+        return n.ew;
+    }
+
+    public int countWordsStartingWith(String word) {
+        // Write your code here.
+        Node n = root;
+        for(int i=0;i<word.length();i++){
+            char ch = word.charAt(i);
+            if(n.containsKey(ch)){
+                n = n.get(ch);
+            }
+            else{
+                return 0;
+            }
+        
+        
+        }
+        return n.cp;
+
+    }
+
+    public void erase(String word) {
+        // Write your code here.
+        Node n = root;
+        for(int i=0;i<word.length();i++){
+            char ch = word.charAt(i);
+            if(n.containsKey(ch)){
+                n = n.get(ch);
+                n.cp--;
+                
+            }
+        }
+        if(n.ew!=0){
+            n.ew--;
+        }
+    }
+
+}
