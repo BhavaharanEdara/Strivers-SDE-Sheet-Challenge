@@ -1,0 +1,123 @@
+import java.util.* ;
+import java.io.*; 
+
+class Node{
+    Node[] links = new Node[26];
+    boolean flag = false;
+
+    public Node() {
+        
+    }
+    
+    boolean containsKey(char ch) {
+        return (links[ch - 'a'] != null);
+    }
+    Node get(char ch) {
+        return links[ch-'a']; 
+    }
+    void put(char ch, Node node) {
+        links[ch-'a'] = node; 
+    }
+    void setEnd() {
+        flag = true; 
+    }
+    boolean isEnd() {
+        return flag; 
+    }
+};
+
+class Trie {
+
+
+    //Initialize your data structure here
+    private static Node root;
+    
+    Trie() {
+        //Write your code here
+        root = new Node();
+    }
+
+
+    //Inserts a word into the trie
+
+    public static void insert(String word) {
+        //Write your code here
+        Node n = root;
+        for(int i=0;i<word.length();i++){
+            if(!n.containsKey(word.charAt(i))){
+                n.put(word.charAt(i), new Node()); 
+            }
+            n = n.get(word.charAt(i)); 
+            
+
+        }
+        n.flag = true;
+
+    }
+
+
+    //Returns if the word is in the trie
+
+    public static boolean search(String word) {
+        //Write your code here
+        Node n = root; 
+        for(int i=0;i<word.length();i++){
+            if(!n.containsKey(word.charAt(i))){
+                return false;
+            }
+            n = n.get(word.charAt(i));
+        }
+        return n.flag; 
+    }
+
+    
+    //Returns if there is any word in the trie that starts with the given prefix
+
+    public static boolean startsWith(String prefix) {
+        //Write your code here
+        Node n = root; 
+        for(int i=0;i<prefix.length();i++){
+            if(!n.containsKey(prefix.charAt(i))){
+                return false;
+            }
+            n = n.get(prefix.charAt(i));
+        }
+        return true;
+    
+    }
+    public static boolean prefixcheck(String word){
+      Node n = root;
+      for(int i=0;i<word.length();i++){
+        char ch = word.charAt(i);
+        if(n.containsKey(ch)){
+            n = n.get(ch);
+        }
+        else{
+            insert(word);
+            return false;
+        }
+        
+      }
+      return true;
+      
+    }
+
+}
+
+public class Solution {
+    public static int distinctSubstring(String word) {
+        // Write your code here.
+        int ans=0;
+        Trie star = new Trie();
+        for(int i=0;i<word.length();i++){
+            for(int j=i+1;j<=word.length();j++){
+                if(!star.prefixcheck(word.substring(i,j))){
+                    ans++;
+                }
+            }
+
+        }
+        return ans;
+
+    }
+}
