@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class Solution {
+    public static List< Integer > stringMatch(String S, String pat){
+        // Write your code here.
+        int h = 0;
+        for(int i=0;i<pat.length();i++){
+            h+= pat.charAt(i);
+        }
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        int i=0;
+        int j = 0;
+        int nh = 0;
+        while(j<pat.length()){
+            nh += S.charAt(j);
+            j++;
+        }
+        if(nh==h){
+            if(pat.equals(S.substring(i, pat.length()))){
+                ans.add(i+1);
+            }
+        }
+        
+        j = pat.length();
+        while(j<S.length()){
+            nh += S.charAt(j);
+            nh -= S.charAt(i);
+            i++;j++;
+            if(nh==h){
+            if(pat.equals(S.substring(i, j))){
+                ans.add(i+1);
+            }}
+        }
+        //if(ans.size()==0){}
+        return ans;
+
+    }
+}
