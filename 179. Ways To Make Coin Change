@@ -1,0 +1,29 @@
+
+public class Solution {
+
+    public static long countWaysToMakeChange(int coins[], int sum){
+		int N = coins.length;
+        
+        long[][]dp = new long[N+1][sum+1];
+        
+        for(int i=0;i<N;i++){
+            dp[i][0] = 1;
+        }
+        
+        for(int i=1;i<=N;i++){
+            for(int j=0;j<=sum;j++){
+                long a = 0;
+                if(coins[i-1]<=j){
+                a = dp[i][j-coins[i-1]];}
+                
+                long c  = dp[i-1][j];
+                dp[i][j] = a+c;
+            }
+        }
+        return dp[N][sum];
+        
+        
+    }
+
+	
+}
