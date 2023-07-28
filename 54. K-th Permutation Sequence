@@ -1,0 +1,25 @@
+import java.util.ArrayList;
+
+public class Solution {
+    public static String kthPermutation(int n, int k) {
+        // Write your code here.
+        int fac = 1;
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            arr.add(i);
+            fac*=i;
+        }
+        fac = fac/n;
+        String res = "";
+        k = k-1;
+        while(true){
+            res = res + arr.get(k/fac);
+            arr.remove(k/fac);
+            if(arr.size()==0){break;}
+            k = k%fac;
+            fac = fac/arr.size();
+        }
+        return res;
+        
+    }
+}
