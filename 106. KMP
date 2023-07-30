@@ -1,0 +1,45 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static boolean findPattern(String p, String s) {
+        int plen = p.length(), slen = s.length();
+        int[] arr = new int[plen];
+        compute(p, arr, plen);
+        int i = 0, j = 0;
+        while (j < slen) {
+            if (s.charAt(j) == p.charAt(i)) {
+                i++;
+                j++;
+            }
+            if (i == plen) {
+                return true;
+            } else if (j < slen && s.charAt(j) != p.charAt(i)) {
+                if (i != 0) {
+                    i = arr[i - 1];
+                } else {
+                    j++;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void compute(String p, int[] arr, int len) {
+        arr[0] = 0;
+        int i = 0, j = 1;
+        while (j < len) {
+            if (p.charAt(i) == p.charAt(j)) {
+                i++;
+                arr[j] = i;
+                j++;
+            } else {
+                if (i != 0) {
+                    i = arr[i - 1];
+                } else {
+                    arr[j] = 0;
+                    j++;
+                }
+            }
+        }
+    }
+}
