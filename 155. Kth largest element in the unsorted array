@@ -6,12 +6,13 @@ public class Solution {
 		// Write your code here.
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 
-        for (int x : arr) {
-            pq.offer(x);
-            if (pq.size() > K)
-                pq.poll();
-        }
-        return pq.peek();
+        	for (int x : arr) {
+        	    pq.offer(x);
+        	    if (pq.size() > K){
+                	pq.poll();
+		    }
+        	}
+        	return pq.peek();
 
 	}
 }
