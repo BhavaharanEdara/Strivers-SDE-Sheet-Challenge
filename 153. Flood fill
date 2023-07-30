@@ -1,0 +1,26 @@
+public class Solution
+{
+
+    static void dfs(int[][] mat,int x,int y, int col, int[][] vis, int a ){
+        if(x>=mat.length || y>=mat[0].length || x<0 || y<0){
+            return;
+        }
+        if(mat[x][y]!=a || vis[x][y]==1){
+            return;
+        }
+        mat[x][y] = col;
+        vis[x][y] = 1;
+        dfs(mat, x+1, y, col, vis, a);
+        dfs(mat, x, y+1, col, vis, a);
+        dfs(mat, x-1, y, col, vis, a);
+        dfs(mat, x, y-1, col, vis, a);
+    }
+    public static int[][] floodFill(int[][] image, int x, int y, int newColor)
+    {
+        // Write your code here
+        int[][] vis = new int[image.length][image[0].length];
+        dfs(image, x, y, newColor, vis, image[x][y]);
+        return image;
+    }
+}
+
