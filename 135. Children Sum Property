@@ -1,0 +1,49 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode < Integer > {
+        int data;
+        BinaryTreeNode < Integer > left;
+        BinaryTreeNode < Integer > right;
+
+    public BinaryTreeNode(int data) {
+            this.data = data;
+        }
+    }
+
+*************************************************************/
+
+public class Solution {
+    public static int change(BinaryTreeNode<Integer> root, int val) {
+        if(root==null){
+            return Integer.MAX_VALUE;
+        }
+        int temp = root.data;
+        if(val != Integer.MAX_VALUE && val > root.data){
+            temp = val;
+        }
+        int left = change(root.left, temp);
+        int right = change(root.right, temp);
+
+        if (left == Integer.MAX_VALUE && right == Integer.MAX_VALUE) {
+            if (val >= root.data)
+                root.data = val;
+        } else if (left == Integer.MAX_VALUE)
+            root.data = right;
+        else if (right == Integer.MAX_VALUE)
+            root.data = left;
+        else
+            root.data = left + right;
+
+        return root.data;
+    }
+
+    public static void changeTree(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+        change(root, Integer.MAX_VALUE);
+    }
+
+}
