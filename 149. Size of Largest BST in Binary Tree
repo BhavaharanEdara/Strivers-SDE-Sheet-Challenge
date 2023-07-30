@@ -1,0 +1,48 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the Binary Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+
+vector<int> BST(TreeNode<int> *root)
+{
+    if (root == NULL){
+      return {0, INT_MAX, INT_MIN};
+    }
+    vector<int> a = BST(root->left);
+    vector<int> b = BST(root->right);
+    if (a[2] < root->data && root->data < b[1]){
+      return {1 + a[0] + b[0], min(a[1], root->data), max(b[2], root->data)};
+    } 
+    else{
+      return {max(a[0], b[0]), INT_MIN, INT_MAX};
+    }
+}
+int largestBST(TreeNode<int> *root)
+{
+    // Write your code here.
+    vector<int> arr = BST(root);
+    return arr[0];
+}
