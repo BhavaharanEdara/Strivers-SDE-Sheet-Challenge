@@ -1,0 +1,49 @@
+import java.util.*;
+public class Solution {
+
+    static boolean dfs(int[][] mat, int node, int m, int[] vis, int[] col, int color, int n){
+        if(vis[node]==1){
+            if(col[node]==color){return true;}
+            //System.out.println(node+" "+color);
+            return false;
+        }
+        //System.out.println(node+" "+color);
+
+
+        vis[node] = 1;
+        col[node] = color;
+        for(int i=0;i<n;i++){
+            if(mat[node][i]==1){
+                if(color==0){
+                    boolean a = dfs(mat, i, m, vis, col, 1,n);
+                    if(!a){return a;}
+                }
+                else{
+                    boolean a = dfs(mat, i, m, vis, col, 0, n);
+                    if(!a){return a;}
+                }
+            }
+        }
+        return true;
+    }
+    public static String graphColoring(int [][]mat, int m) {
+        // Write your code here
+        int n = mat.length;
+        if(m==1 && n==1){return "YES";}
+        if(m<=1){return "NO";}
+        
+        int[] visited = new int[n];
+        int[] color = new int[n];
+        Arrays.fill(color,-1);
+        for(int i=0;i<n;i++){
+            if(visited[i]==0){
+                boolean a = dfs(mat, 0, m, visited, color, 0,n);
+                if(!a){
+                    if(m>2){return "YES";}
+                    return "NO";
+                }
+            }
+        }
+        return "YES";
+    }
+}
